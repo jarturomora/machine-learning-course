@@ -17,3 +17,5 @@
 # sftp configuration file
 sftp-config.json
 
+# Octave
+octave-workspace
