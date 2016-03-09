@@ -20,12 +20,24 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
+% printf('size(X) ')
+% size(X)
 
+% printf('size(theta) ')
+% size(theta)
 
+% printf('size(y) ')
+% size(y)
+z = X * theta;
 
+J = 1 / m * sum(-y .* log(sigmoid(z)) - (1 - y) .* log(1 - sigmoid(z)));
 
+for j = 1:length(theta)
+    grad(j) = 1 / m * sum ((sigmoid(z) - y) .* X(:,j));
+end
 
-
+% printf('size(grad) ')
+% size(grad)
 
 % =============================================================
 
