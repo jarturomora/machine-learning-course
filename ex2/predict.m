@@ -15,11 +15,12 @@ p = zeros(m, 1);
 %               You should set p to a vector of 0's and 1's
 %
 
+% Here I test my hypothesis function h_thetha(x) = g(theta_T * X)
+% as a result I will get the probability of each student to be admited.
+temp = sigmoid(X * theta);
 
-
-
-
-
+% For all those students with a probability greather than 50% I predict 1
+p = temp >= 0.5;
 
 % =========================================================================
 
