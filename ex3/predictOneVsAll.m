@@ -30,11 +30,20 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
+% Calculate h(theta) similar to linear regression since this poblema could be
+% simplied as one of this kind.
+% h_theta = X * all_theta'
 
+z = X * all_theta';
 
+p = sigmoid(z);
+[val, p] = max(p, [], 2);
 
+% k = size(all_theta, 1); % Number of labels
 
-
+% for i=1:k
+%     p(i) = max(h_theta(i,:));
+% end
 
 % =========================================================================
 
