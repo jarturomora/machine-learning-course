@@ -37,6 +37,8 @@ X = [ones(m, 1) X];
 z = X * all_theta';
 
 p = sigmoid(z);
+% Following we look for the most influential category (label), so we want to
+% know the column to predict the number that each example (Xi) represents.
 [val, p] = max(p, [], 2);
 
 % k = size(all_theta, 1); % Number of labels
