@@ -62,23 +62,27 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% --------------------------------------
+% Part 1: Feedforward the neural network
+%---------------------------------------
+% Calculate de activation functions for the neural network
+X = [ones(m, 1), X];
+A1 = X;
+A2 = sigmoid(A1 * Theta1');
+A2 = [ones(m, 1), A2];
+A3 = sigmoid(A2 * Theta2'); % h_theta
 
+% Calculate the cost function, we make 'k' additions for the 'm' samples in Jk
+for k = 1: num_labels
+    yk = y == k;
+    h_theta = A3(:, k);
+    Jk = sum(-yk .* log(h_theta) - (1 - yk) .* log(1 - h_theta)) / m;
+    J = J + Jk;
+end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+% Regularization of cost function
+J = J + (lambda / (2 * m) * (sum(sum(Theta1(:, 2:end) .^ 2)) ...
+    + sum(sum(Theta2(:, 2:end) .^ 2))));
 
 % -------------------------------------------------------------
 
