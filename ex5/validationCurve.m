@@ -39,14 +39,19 @@ error_val = zeros(length(lambda_vec), 1);
 %
 %
 
+lambdas = length(lambda_vec);
+m = size(X, 1);
 
-
-
-
-
-
-
-
+for i = 1:lambdas
+    lambda = lambda_vec(i);
+    % Calculate theta values for training and cross-val sets changing
+    % the value of lambda
+    theta = trainLinearReg(X, y, lambda);
+    % Calculating error train with the training sets X and y (min square errors)
+    error_train(i) = 1 /(2 * m) * sum((X * theta - y).^2);
+    % Calculating error for cross-valitation using the sets given as parameters
+    error_val(i) = 1 /(2 * m) * sum((Xval * theta - yval).^2);
+end
 
 % =========================================================================
 
