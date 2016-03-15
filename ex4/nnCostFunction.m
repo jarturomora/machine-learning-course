@@ -64,16 +64,19 @@ Theta2_grad = zeros(size(Theta2));
 
 % --------------------------------------
 % Part 1: Feedforward the neural network
-%---------------------------------------
+% --------------------------------------
 % Calculate de activation functions for the neural network
 X = [ones(m, 1), X];
 A1 = X;
-A2 = sigmoid(A1 * Theta1');
+z2 = A1 * Theta1';
+A2 = sigmoid(z2);
 A2 = [ones(m, 1), A2];
-A3 = sigmoid(A2 * Theta2'); % h_theta
+z3 = A2 * Theta2';
+A3 = sigmoid(z3); % h_theta
 
 % Calculate the cost function, we make 'k' additions for the 'm' samples in Jk
 for k = 1: num_labels
+    % Check if we find a match with y
     yk = y == k;
     h_theta = A3(:, k);
     Jk = sum(-yk .* log(h_theta) - (1 - yk) .* log(1 - h_theta)) / m;
@@ -83,6 +86,34 @@ end
 % Regularization of cost function
 J = J + (lambda / (2 * m) * (sum(sum(Theta1(:, 2:end) .^ 2)) ...
     + sum(sum(Theta2(:, 2:end) .^ 2))));
+
+% -----------------------------------------------
+% Part 2: Implement the backpropagation algorithm
+%         for a three layer network.
+% -----------------------------------------------
+for t = 1:m
+    % Calculate delta_3 for each of the classes
+    for k = 1:num_labels
+        yk = y(t) == k;
+        delta_3(k) = A3(t, k) - yk;
+    end
+
+    % Calculate delta_2 for the hidden layer
+    delta_2 = Theta2' * delta_3' .* sigmoidGradient([1, z2(t, :)])';
+    delta_2 = delta_2(2:end); % Remove bias element
+
+    % Acummulate the gradient for this example
+    Theta1_grad = Theta1_grad + delta_2 * A1(t, :);
+    Theta2_grad = Theta2_grad + delta_3' * A2(t, :);
+end
+
+% Obtaing the unregularized gradient
+Theta1_grad = Theta1_grad / m;
+Theta2_grad = Theta2_grad / m;
+
+% Regularized neural network
+Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + lambda / m * Theta1(:, 2:end);
+Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + lambda / m * Theta2(:, 2:end);
 
 % -------------------------------------------------------------
 
