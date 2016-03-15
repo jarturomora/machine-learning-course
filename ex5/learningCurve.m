@@ -53,11 +53,17 @@ error_val   = zeros(m, 1);
 
 % ---------------------- Sample Solution ----------------------
 
+for i = 1:m
+    % Get theta for the training set.
+    theta = trainLinearReg(X(1:i, :), y(1:i), lambda);
 
-
-
-
-
+    % Calculate train and cross validation error using my cost function
+    % and the training sets X and y.
+    error_train(i) = linearRegCostFunction(X(1:i, :), y(1:i), theta, 0);
+    % Calculate cross-validation error using the validation data provided
+    % as parameter.
+    error_val(i) = linearRegCostFunction(Xval, yval, theta, 0);
+end
 
 % -------------------------------------------------------------
 
