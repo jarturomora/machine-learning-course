@@ -48,7 +48,8 @@ x = zeros(n, 1);
 %
 %
 
-x = word_indices > 0;
+% We simply assign an 1 in vector X in the positions defined in word_indices
+x(word_indices) = 1;
 
 % =========================================================================
     
