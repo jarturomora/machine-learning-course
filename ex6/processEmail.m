@@ -97,14 +97,12 @@ while ~isempty(email_contents)
     %       str2). It will return 1 only if the two strings are equivalent.
     %
 
-
-
-
-
-
-
-
-
+    % We look for the index of current "str" into the vocabList
+    str_position = find(ismember(vocabList, str) == 1);
+    % If we find the word we save the position
+    if str_position > 0
+        word_indices = vertcat(word_indices, str_position);
+    end
 
     % =============================================================
 
