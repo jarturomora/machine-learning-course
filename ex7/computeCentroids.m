@@ -32,7 +32,7 @@ for i=1:K
     % the row where the current centroid has a data point. Remember that idx
     % has the same number of rows as X.
     centroid_points = idx == i;
-    % We calculate the mean of every centroid. By multiplying by centroid_pints
+    % We calculate the mean of every centroid. By multiplying by centroid_points
     % each value of X we make zero each point that doesn't belong to
     % the current centroid.
     centroids(i,:) = sum(X .* centroid_points) / sum(centroid_points);

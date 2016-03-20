@@ -20,11 +20,11 @@ S = zeros(n);
 %       number of examples).
 %
 
+% Covariance matrix
+Sigma = X' * X / m;
 
-
-
-
-
+% Calculate components of PCA
+[U, S, V] = svd(Sigma);
 
 % =========================================================================
 
