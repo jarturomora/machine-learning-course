@@ -11,7 +11,7 @@ function centroids = computeCentroids(X, idx, K)
 %
 
 % Useful variables
-[m n] = size(X);
+[m n] = size(X)
 
 % You need to return the following variables correctly.
 centroids = zeros(K, n);
@@ -26,12 +26,17 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
-
-
-
-
-
-
+% We iterate on each centroid to find the means of each one's data points
+for i=1:K
+    % We identify which points belong to each centroid by assigning 1 (true) to
+    % the row where the current centroid has a data point. Remember that idx
+    % has the same number of rows as X.
+    centroid_points = idx == i;
+    % We calculate the mean of every centroid. By multiplying by centroid_pints
+    % each value of X we make zero each point that doesn't belong to
+    % the current centroid.
+    centroids(i,:) = sum(X .* centroid_points) / sum(centroid_points);
+end
 
 % =============================================================
 
