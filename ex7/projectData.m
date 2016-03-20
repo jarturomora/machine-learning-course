@@ -19,6 +19,7 @@ Z = zeros(size(X, 1), K);
 %
 
 x = X';
+% Note that the top K components in U are given by the first K columns of U.
 Z = x' * U(:, 1:K);
 
 % =============================================================
