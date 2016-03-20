@@ -21,11 +21,27 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+samples = length(X);
 
+% We iterate on each example to find its best value of C
+for i=1:samples
+    % Making the assumption that the initial distance between X(i) and
+    % mu(i) is infinite, so any shorter distance using all the centroids
+    % will be the best.
+    distance = inf;
+    % Now we iterate on each centroid looking for the shortests distance
+    % for each x(i).
+    for j=1:K
+        centroid_distance = norm(X(i, :) - centroids(j, :));
+        % do I find a shorther distance?
+        if (centroid_distance < distance)
+            distance = centroid_distance;
+            % The current shortest distance is the centroid at position j
+            idx(i) = j;
+        end
+    end
 
-
-
-
+end
 
 % =============================================================
 
