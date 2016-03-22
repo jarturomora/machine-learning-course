@@ -9,7 +9,7 @@ function [J, grad] = cofiCostFunc(params, Y, R, num_users, num_movies, ...
 % Unfold the U and W matrices from params
 X = reshape(params(1:num_movies*num_features), num_movies, num_features);
 Theta = reshape(params(num_movies*num_features+1:end), ...
-                num_users, num_features)
+                num_users, num_features);
 
             
 % You need to return the following values correctly
@@ -57,7 +57,8 @@ for i=1:num_movies
     % select the ratings of the users that have rated a particular movie
     movie_Ys = Y(i, user_index);
     % Calculate the gradient for the current movie
-    X_grad(i, :) = (X(i, :) * user_thetas' - movie_Ys) * user_thetas;
+    X_grad(i, :) = (X(i, :) * user_thetas' - movie_Ys) * user_thetas ...
+                    + lambda * X(i, :);
 end
 
 
@@ -70,7 +71,8 @@ for i=1:num_users
     % selectr the movies that have rated the current user
     movie_Ys = Y(movie_index, i);
     % calculate the gradient descent for the current user
-    Theta_grad(i, :) = (movie_X * Theta(i, :)' - movie_Ys)' * movie_X;
+    Theta_grad(i, :) = (movie_X * Theta(i, :)' - movie_Ys)' * movie_X ...
+                        + lambda * Theta(i, :);
 end
 
 % =============================================================
