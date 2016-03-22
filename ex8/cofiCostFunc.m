@@ -43,7 +43,8 @@ Theta_grad = zeros(size(Theta));
 % Calculate cost function where R(i,j) = 1. By multiplying R by
 % the cost function formula (X * Theta' - Y).^2 I only keep the movies where
 % a user has made a recommendation.
-J = sum(sum(R .* (X * Theta' - Y).^2)) / 2;
+J = sum(sum(R .* (X * Theta' - Y).^2)) / 2 ...
+    + (lambda / 2) * sum(sum(Theta.^2)) + (lambda / 2) * sum(sum(X.^2));
 
 % Calculate gradient descent for X on every movie where there is a
 % rating from a user
