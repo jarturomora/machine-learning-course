@@ -40,19 +40,10 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+% Calculate cost function where R(i,j) = 1. By multiplying R by
+% the cost function formula (X * Theta' - Y).^2 I only keep the movies where
+% a user has made a recommendation.
+J = sum(sum(R .* (X * Theta' - Y).^2)) / 2;
 
 
 % =============================================================
