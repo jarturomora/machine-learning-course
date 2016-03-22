@@ -9,7 +9,7 @@ function [J, grad] = cofiCostFunc(params, Y, R, num_users, num_movies, ...
 % Unfold the U and W matrices from params
 X = reshape(params(1:num_movies*num_features), num_movies, num_features);
 Theta = reshape(params(num_movies*num_features+1:end), ...
-                num_users, num_features);
+                num_users, num_features)
 
             
 % You need to return the following values correctly
@@ -45,6 +45,32 @@ Theta_grad = zeros(size(Theta));
 % a user has made a recommendation.
 J = sum(sum(R .* (X * Theta' - Y).^2)) / 2;
 
+% Calculate gradient descent for X on every movie where there is a
+% rating from a user
+
+for i=1:num_movies
+    % find the index of users that have rated a particular movie
+    user_index = find(R(i, :) == 1);
+    % select the thetas for those users that have rated a particular movie
+    user_thetas = Theta(user_index, :);
+    % select the ratings of the users that have rated a particular movie
+    movie_Ys = Y(i, user_index);
+    % Calculate the gradient for the current movie
+    X_grad(i, :) = (X(i, :) * user_thetas' - movie_Ys) * user_thetas;
+end
+
+
+% Calculate gradient descent for theta of every user that has rated a movie.
+for i=1:num_users
+    % find the index of movies that have a rating.
+    movie_index = find(R(:, i) == 1);
+    % select the features of movies that have a rating
+    movie_X = X(movie_index, :);
+    % selectr the movies that have rated the current user
+    movie_Ys = Y(movie_index, i);
+    % calculate the gradient descent for the current user
+    Theta_grad(i, :) = (movie_X * Theta(i, :)' - movie_Ys)' * movie_X;
+end
 
 % =============================================================
 
